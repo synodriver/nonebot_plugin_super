@@ -16,7 +16,7 @@ async def check_bot(bot: Bot, event: Event, state: dict) -> bool:
     """
     只有规定的bot才能触发
     """
-    return True if event.self_id in ALLOW_BOTS else False
+    return event.self_id in ALLOW_BOTS
 
 
 headers = {'Accept': '*/*', 'Accept-Encoding': 'gzip, deflate, br', 'Accept-Language': 'zh-CN,zh;q=0.9',
@@ -50,7 +50,7 @@ async def execute(code: str, language: str, user_id: int):
             export = require("nonebot_plugin_navicat")
             if export is None:
                 return "", ""
-            pool_name = language + "_pool"
+            pool_name = f"{language}_pool"
             if pool_name in export:
                 rows = await export[pool_name].fetch_all(code)
                 rows = list(map(list, rows))
